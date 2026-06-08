@@ -1,0 +1,14 @@
+.message-tip{
+    position: absolute;
+    text-wrap-mode:nowrap;
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 2px 4px;
+    font-size: 12px;
+    color: var(--foreground);
+    font-weight: normal;
+    line-height: 20px;
+    &:hover{
+        z-index: 10000;
+    }
+}

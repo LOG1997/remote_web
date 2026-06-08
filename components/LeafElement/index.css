@@ -1,0 +1,34 @@
+.leaf-element{
+    cursor: pointer;
+}
+.underline-leaf {
+    text-decoration: underline;
+    &:hover {
+        color: aqua;
+    }
+}
+.wave-leaf {
+    text-decoration:underline wavy;
+    &:hover {
+        color: rgb(255, 89, 89);
+    }
+}
+
+.delete-leaf {
+    text-decoration: line-through;
+    &:hover {
+        color: gray;
+    }
+}
+
+.red-leaf {
+    background-color: rgb(255, 89, 89);
+}
+
+.blue-leaf { 
+    background-color: rgb(66, 154, 255);
+}
+
+.orange-leaf { 
+    background-color: orange;
+}
