@@ -1,12 +1,14 @@
 import { createMqttClient } from "./background/mqttCLient";
+import { storage } from '#imports'
 
-export default defineBackground(() => {
+export default defineBackground(async () => {
     console.log("Hello background!", { id: browser.runtime.id });
-    const brokerUrl = 'ws://127.0.0.1:8889';
+    const mqttConfig: any = await storage.getItem('local:mqttConfig');
+    const brokerUrl = `ws://${mqttConfig?.address}:${mqttConfig?.port}`;
     const mqttOptions = {
         clientId: `wxt_ext_${Math.random().toString(16).slice(2, 10)}`,
-        username: 'log1997',   // 如果需要
-        password: '1453',
+        username: mqttConfig.username,   // 如果需要
+        password: mqttConfig.password,   // 如果需要
         keepalive: 60,
     };
     const mqttClient = createMqttClient(brokerUrl, mqttOptions);
@@ -24,6 +26,9 @@ export default defineBackground(() => {
                     action: 'mqtt_action',
                     payload,
                 });
+            }
+            else {
+                console.log('[background] No active tab found');
             }
         }
         else {

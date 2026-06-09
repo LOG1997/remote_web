@@ -7,12 +7,17 @@ export default defineConfig({
     }),
     modules: ["@wxt-dev/module-react"],
     webExt: {
-        startUrls: ["https://go.itab.link/"],
+        startUrls: ["https://www.baidu.com/"],
     },
     manifest: {
         name: "WXT",
         description: "A simple extension",
         version: "0.0.1",
+        // options_page: "options.html",
+        options_ui: {
+            open_in_tab: true,
+            page: "options.html",
+        },
         permissions: ["storage", "tabs", "notifications"],
     }
 });

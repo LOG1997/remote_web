@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { MantineProvider } from "@mantine/core";
-import MainPopup from "@/components/MainPopup";
+import { MainOptions } from "@/components/Options";
 import '@/styles/tailwind.css';
+import { Toaster } from "@/components/ui/sonner";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById("app")!).render(
     <React.StrictMode>
-
         <MantineProvider theme={theme}>
-            {/*<Counter />*/}
-            <MainPopup />
+            <Toaster />
+            <MainOptions />
         </MantineProvider>
     </React.StrictMode>,
 );
