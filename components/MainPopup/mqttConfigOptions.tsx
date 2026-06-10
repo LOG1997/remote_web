@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/card"
 import { MqttConfigType } from '@/entrypoints/types/mqtt.type'
 import { Copy } from "lucide-react";
+import { getTargetTopic } from "@/entrypoints/background/mqttClient";
 
 enum ConnectStatus {
     CONNECTING = "CONNECTING",

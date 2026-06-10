@@ -2,11 +2,17 @@ import { createMqttClient } from './clientClass';
 import { storage } from '#imports';
 import { getMqttConfig } from './mqttConfig'
 import { MqttConfigType } from '../../types/mqtt.type';
+
+export const getTargetTopic = async () => {
+    const mqttConfig = await getMqttConfig();
+    const manifest = browser.runtime.getManifest();
+    let targetTopic = `${manifest.name}/${mqttConfig.topicName}/receive`;
+    return targetTopic;
+}
 export const connectMqtt = async () => {
     const mqttConfig = await getMqttConfig();
     const mqttClient = createMqttClient(mqttConfig.brokerUrl, mqttConfig.mqttOptions);
-    const manifest = browser.runtime.getManifest();
-    let targetTopic = `${manifest.name}/${mqttConfig.topicName}/receive`;
+    let targetTopic = await getTargetTopic();
     console.log('mqtt topic:', targetTopic);
     // 定义消息处理函数（收到 MQTT 消息后，转发给当前页面）
 
@@ -35,7 +41,7 @@ export const connectMqtt = async () => {
             password: newConfig.password,   // 如果需要
             keepalive: 60,
         };
-        targetTopic = `${manifest.name}/${newConfig.topicName}/receive`
+        targetTopic = await getTargetTopic();
         if (mqttClient.status === 'connected' || mqttClient.status === 'connecting') {
             mqttClient.disconnect();
             mqttClient.updateOptions(mqttOptions, newBrokerUrl);
@@ -55,9 +61,7 @@ export const connectMqtt = async () => {
 export const handleMqttMessage = async (topic: string, message: Buffer) => {
     const payload = message.toString();
     console.log(`[background] MQTT message on ${topic}: ${payload}`);
-    const mqttConfig = await getMqttConfig();
-    const manifest = browser.runtime.getManifest();
-    let targetTopic = `${manifest.name}/${mqttConfig.topicName}/receive`;
+    let targetTopic = await getTargetTopic();
     // 根据你的业务逻辑决定是否转发
     if (topic === targetTopic) {
         const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
@@ -73,6 +77,6 @@ export const handleMqttMessage = async (topic: string, message: Buffer) => {
         }
     }
     else {
-        alert(`Received MQTT message on ${topic}: ${payload}`); // 其他主题的消息直接弹窗显示
+        console.log(`Received MQTT message on ${topic}: ${payload}`); // 其他主题的消息直接弹窗显示
     }
 };

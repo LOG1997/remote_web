@@ -1,6 +1,4 @@
-import { connectMqtt, handleMqttMessage } from "./background/mqttClient";
-import { storage } from '#imports'
-import { getMqttConfig } from './background/mqttClient/mqttConfig'
+import { connectMqtt, handleMqttMessage, getTargetTopic } from "./background/mqttClient";
 
 export default defineBackground(async () => {
     console.log("Hello background!", { id: browser.runtime.id });
@@ -13,9 +11,7 @@ export default defineBackground(async () => {
         }
         else if (message.type === 'CONNECT_MQTT') {
             await mqttClient.connect(handleMqttMessage)
-            const mqttConfig = await getMqttConfig();
-            const manifest = browser.runtime.getManifest();
-            let targetTopic = `${manifest.name}/${mqttConfig.topicName}/receive`;
+            let targetTopic = await getTargetTopic();
             mqttClient.subscribe(targetTopic);
             sendResponse({ mqttStatus: mqttClient.status });
         }
