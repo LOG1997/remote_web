@@ -11,7 +11,7 @@ export function MainOptions() {
         setMqttConfig(mqttConfig)
     }
     const handleSubmitMqtt = (data: any) => {
-        console.log('handle submit mqtt', data)
+        console.log('handle submit mqtt', data);
         storage.setItem('local:mqttConfig', data)
     }
 

@@ -48,7 +48,7 @@ export function MqttConfigForm(props: Props) {
             port: value && value.port || 8889,
             username: value && value.username || "",
             password: value && value.password || "",
-            topicName: value && value.receiveTopic || "",
+            topicName: value && value.topicName || "",
         },
         validators: {
             onSubmit: formSchema,
@@ -188,6 +188,33 @@ export function MqttConfigForm(props: Props) {
                                                 onChange={(e) => field.handleChange(e.target.value)}
                                                 aria-invalid={isInvalid}
                                                 placeholder="your mqtt server password"
+                                                autoComplete="off"
+                                            />
+                                        </InputGroup>
+                                        {isInvalid && (
+                                            <FieldError errors={field.state.meta.errors} />
+                                        )}
+                                    </Field>
+                                )
+                            }}
+                        />
+                        <form.Field
+                            name="topicName"
+                            children={(field) => {
+                                const isInvalid =
+                                    field.state.meta.isTouched && !field.state.meta.isValid
+                                return (
+                                    <Field data-invalid={isInvalid}>
+                                        <FieldLabel htmlFor={field.name}>Mqtt server topicName</FieldLabel>
+                                        <InputGroup>
+                                            <Input
+                                                id={field.name}
+                                                name={field.name}
+                                                value={field.state.value}
+                                                onBlur={field.handleBlur}
+                                                onChange={(e) => field.handleChange(e.target.value)}
+                                                aria-invalid={isInvalid}
+                                                placeholder="your mqtt server topicName"
                                                 autoComplete="off"
                                             />
                                         </InputGroup>

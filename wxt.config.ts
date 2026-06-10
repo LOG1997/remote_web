@@ -10,7 +10,7 @@ export default defineConfig({
         startUrls: ["https://www.baidu.com/"],
     },
     manifest: {
-        name: "WXT",
+        name: "tv-web",
         description: "A simple extension",
         version: "0.0.1",
         // options_page: "options.html",
