@@ -13,9 +13,6 @@ export const connectMqtt = async () => {
     const mqttConfig = await getMqttConfig();
     const mqttClient = createMqttClient(mqttConfig.brokerUrl, mqttConfig.mqttOptions);
     let targetTopic = await getTargetTopic();
-    console.log('mqtt topic:', targetTopic);
-    // 定义消息处理函数（收到 MQTT 消息后，转发给当前页面）
-
 
     mqttClient.connect(handleMqttMessage)
         .then(() => {
@@ -34,7 +31,7 @@ export const connectMqtt = async () => {
             return
         }
         console.log('MQTT config changed, updating client...', newConfig);
-        const newBrokerUrl = `ws://${newConfig?.address}:${newConfig?.port}`;
+        const newBrokerUrl = `ws://${newConfig?.address}:${newConfig?.port}${newConfig?.path || ''}`;
         const mqttOptions = {
             clientId: `wxt_ext_${Math.random().toString(16).slice(2, 10)}`,
             username: newConfig.username,   // 如果需要

@@ -32,7 +32,7 @@ export default function MqttConfigOptions() {
         let localMqttConfig: any = await storage.getItem('local:mqttConfig');
         setMqttConfig(localMqttConfig || {});
         if (localMqttConfig && localMqttConfig.address && localMqttConfig.port) {
-            setBrokerUrl(`ws://${localMqttConfig.address}:${localMqttConfig.port}`)
+            setBrokerUrl(`ws://${localMqttConfig.address}:${localMqttConfig.port}${localMqttConfig.path || ''}`)
         }
         if (localMqttConfig && localMqttConfig.topicName) {
             const manifest = browser.runtime.getManifest();
@@ -67,10 +67,10 @@ export default function MqttConfigOptions() {
 
     async function connectMqtt() {
         try {
+            console.log('已设置MQTT配置:', mqttConfig);
             const response = await browser.runtime.sendMessage({ type: 'CONNECT_MQTT' });
             console.log('连接结果:', response);
             setConnectStatus(response.mqttStatus.toUpperCase() as ConnectStatus);
-            // setConnectionStatus(response.mqttStatus);
             // 刷新连接状态...
         } catch (error) {
             console.error('连接失败:', error);

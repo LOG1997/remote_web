@@ -8,6 +8,7 @@ export const getMqttConfig = async () => {
         mqttConfig = {
             address: '127.0.0.1',
             port: 8889,
+            path: '',
             username: '',
             password: '',
             topicName: generateRandomName(),
@@ -15,7 +16,7 @@ export const getMqttConfig = async () => {
         await storage.setItem('local:mqttConfig', mqttConfig);
     }
 
-    const brokerUrl = `ws://${mqttConfig?.address}:${mqttConfig?.port}`;
+    const brokerUrl = `ws://${mqttConfig?.address}:${mqttConfig?.port}${mqttConfig?.path || ''}`;
     console.log('broker url:', brokerUrl);
     const mqttOptions = {
         clientId: `wxt_ext_${Math.random().toString(16).slice(2, 10)}`,

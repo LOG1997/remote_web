@@ -32,6 +32,7 @@ import {
 const formSchema = z.object({
     address: z.string(),
     port: z.number().int().min(1).max(65535),
+    path: z.string(),
     username: z.string(),
     password: z.string(),
     topicName: z.string(),
@@ -46,6 +47,7 @@ export function MqttConfigForm(props: Props) {
         defaultValues: {
             address: value && value.address || "127.0.0.1",
             port: value && value.port || 8889,
+            path: value && value.path || "",
             username: value && value.username || "",
             password: value && value.password || "",
             topicName: value && value.topicName || "",
@@ -136,6 +138,31 @@ export function MqttConfigForm(props: Props) {
                                                 autoComplete="off"
                                             />
                                         </InputGroup>
+                                        {isInvalid && (
+                                            <FieldError errors={field.state.meta.errors} />
+                                        )}
+                                    </Field>
+                                )
+                            }}
+                        />
+                        <form.Field
+                            name="path"
+                            children={(field) => {
+                                const isInvalid =
+                                    field.state.meta.isTouched && !field.state.meta.isValid
+                                return (
+                                    <Field data-invalid={isInvalid}>
+                                        <FieldLabel htmlFor={field.name}>Mqtt Address path</FieldLabel>
+                                        <Input
+                                            id={field.name}
+                                            name={field.name}
+                                            value={field.state.value}
+                                            onBlur={field.handleBlur}
+                                            onChange={(e) => field.handleChange(e.target.value)}
+                                            aria-invalid={isInvalid}
+                                            placeholder="your mqtt address path et. /mqtt"
+                                            autoComplete="off"
+                                        />
                                         {isInvalid && (
                                             <FieldError errors={field.state.meta.errors} />
                                         )}
