@@ -1,22 +1,17 @@
 import { useState, useEffect } from "react"
 import { Toggle } from "@/components/ui/toggle"
 import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
 import { storage } from '#imports';
-import { PublicPath } from "wxt/browser";
 import { CopyButtonStyled } from "@mshafiqyajid/react-copy-button/styled";
 import "@mshafiqyajid/react-copy-button/styles.css";
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
 import { MqttConfigType } from '@/entrypoints/types/mqtt.type'
 import { Copy } from "lucide-react";
-import { getTargetTopic } from "@/entrypoints/background/mqttClient";
 
 enum ConnectStatus {
     CONNECTING = "CONNECTING",

@@ -2,7 +2,7 @@ import mqtt, { MqttClient, IClientOptions } from 'mqtt';
 
 export type MqttMessageHandler = (topic: string, message: Buffer) => void;
 
-class MqttService {
+export class MqttService {
     private client: MqttClient | null = null;
     private brokerUrl: string;
     private options: IClientOptions;
