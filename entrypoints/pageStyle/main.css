@@ -1,4 +1,51 @@
 .tv_web_active_video_card {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    background-color: red;
+    box-shadow: 0px 0px 3px 1px #00000088;
+    scale: 1.09;
+    perspective: 800px;
+    transform-style: preserve-3d;
+    transition: transform 0.25s ease;
+    transform: translateZ(40px) rotateX(8deg) rotateY(8deg);
+
+    position: relative;
+    /* 普通阴影（可选，增强立体感） */
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+    /* 防止光晕伪元素盖住内容 */
+    isolation: isolate;
+}
+
+/* after */
+.tv_web_active_video_card::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    /* 向外扩展 4px，形成边框宽度 */
+    border-radius: 20px;
+    transform-style: preserve-3d;
+    transition: transform 0.25s ease;
+    transform: translateZ(40px) rotateX(8deg) rotateY(8deg);
+    /* 比主元素半径大 4px，保持圆角一致 */
+    background: linear-gradient(45deg,
+            #ff0055,
+            #ffaa00,
+            #00ffaa,
+            #0055ff,
+            #ff0055);
+    background-size: 300% 300%;
+    animation: gradientFlow 3s ease infinite;
+    z-index: -10;
+    /* 放在主元素背后 */
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }

@@ -9,7 +9,7 @@ export interface MqttConfigType {
 
 export const AllowedAppList = {
     "bilibili": [
-        "home", 'history', 'post', 'left', 'right', 'up', 'down', 'pageup', 'pagedown'
+        'enter', "home", 'history', 'post', 'left', 'right', 'up', 'down', 'pageup', 'pagedown'
     ]
 } as const
 

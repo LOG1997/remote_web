@@ -1,6 +1,6 @@
 import { ALLOWED_ACTIONS, AllowedAppList } from '../types/mqtt.type';
 import { toast } from "sonner"
-import { switchActiveCard } from './pageAction/bilibili'
+import { switchActiveCard, enterTheVideo } from './pageAction/bilibili'
 
 const changeWebVolume = (direction: typeof ALLOWED_ACTIONS['volume'][number]) => {
     const videos = document.querySelectorAll('video');
@@ -61,10 +61,19 @@ const handleBilibiliAction = async (action: typeof AllowedAppList['bilibili'][nu
     console.log('handleBilibiliAction', action);
     switch (action) {
         case 'right':
-            // window.location.href = 'https://www.bilibili.com/';
-            console.log('bilibili left');
             switchActiveCard('right')
             break;
+        case 'left':
+            switchActiveCard('left')
+            break;
+        case 'up':
+            switchActiveCard('up')
+            break;
+        case 'down':
+            switchActiveCard('down')
+            break;
+        case 'enter':
+            enterTheVideo()
         default:
             break;
     }
