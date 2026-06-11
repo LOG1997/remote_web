@@ -150,7 +150,7 @@ export const enterTheVideo = async () => {
         if (aElement) {
             const href = aElement.getAttribute('href');
             if (href) {
-                window.open(href, '_self');
+                window.open(href, '_blank');
             }
         }
     }

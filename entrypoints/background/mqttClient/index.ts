@@ -57,7 +57,7 @@ export const connectMqtt = async () => {
 
 const validatePayload = (rawPayload: string): ValidatedPayload | null => {
     try {
-        const parsed: { action: string, data: string } = JSON.parse(rawPayload);
+        const parsed: { action: string, data: string, payload: string } = JSON.parse(rawPayload);
         console.log('[background] Validating MQTT payload:', parsed);
         // 1. 基本结构检查
         if (!parsed || typeof parsed !== 'object') {
@@ -65,7 +65,7 @@ const validatePayload = (rawPayload: string): ValidatedPayload | null => {
             return null;
         }
 
-        const { action, data } = parsed;
+        const { action, data, payload } = parsed;
 
         // 2. 检查 action 是否存在且为字符串
         if (typeof action !== 'string') {
@@ -99,7 +99,7 @@ const validatePayload = (rawPayload: string): ValidatedPayload | null => {
             return null;
         }
 
-        return { action: action as ValidAction, data, timestamp: Date.now() };
+        return { action: action as ValidAction, data, payload, timestamp: Date.now() };
 
     } catch (error) {
         console.warn('[background] Failed to parse or validate MQTT payload:', error);

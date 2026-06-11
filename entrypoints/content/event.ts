@@ -31,6 +31,7 @@ const handleGlobalAction = (action: typeof ALLOWED_ACTIONS['global'][number]) =>
             break;
         case 'fullscreen':
             browser.runtime.sendMessage({ type: 'GLOBAL_FULLSCREEN' })
+            break;
         default:
             break;
     }
@@ -57,7 +58,11 @@ const handleNewTab = async (action: typeof ALLOWED_ACTIONS['new'][number]) => {
     }
 }
 
-const handleBilibiliAction = async (action: typeof AllowedAppList['bilibili'][number]) => {
+const handleSearchAction = async (payloadString: string = '') => {
+    window.open(`https://www.bilibili.com/search?keyword=${payloadString}`, '_self');
+}
+
+const handleBilibiliAction = async (action: typeof AllowedAppList['bilibili'][number], payload?: string) => {
     console.log('handleBilibiliAction', action);
     switch (action) {
         case 'right':
@@ -74,6 +79,10 @@ const handleBilibiliAction = async (action: typeof AllowedAppList['bilibili'][nu
             break;
         case 'enter':
             enterTheVideo()
+            break;
+        case 'search':
+            handleSearchAction(payload)
+            break;
         default:
             break;
     }
@@ -81,7 +90,7 @@ const handleBilibiliAction = async (action: typeof AllowedAppList['bilibili'][nu
 export const listenerMqttMessage = async () => {
     browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         console.log('broser actamsd,L:', message)
-        const { action, data } = message
+        const { action, data, payload } = message
         if (action in ALLOWED_ACTIONS) {
             console.log('[content] Received action:', data);
 
@@ -109,7 +118,7 @@ export const listenerMqttMessage = async () => {
                 handleNewTab(data as typeof ALLOWED_ACTIONS['new'][number])
             }
             if (action === 'bilibili') {
-                handleBilibiliAction(data as typeof AllowedAppList['bilibili'][number])
+                handleBilibiliAction(data as typeof AllowedAppList['bilibili'][number], payload)
             }
 
         }

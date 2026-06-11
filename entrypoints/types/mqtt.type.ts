@@ -9,7 +9,7 @@ export interface MqttConfigType {
 
 export const AllowedAppList = {
     "bilibili": [
-        'enter', "home", 'history', 'post', 'left', 'right', 'up', 'down', 'pageup', 'pagedown'
+        'enter', "home", 'history', 'search', 'post', 'left', 'right', 'up', 'down', 'pageup', 'pagedown'
     ]
 } as const
 
@@ -28,5 +28,6 @@ export type ValidData<T extends ValidAction> = typeof ALLOWED_ACTIONS[T][number]
 export interface ValidatedPayload {
     action: ValidAction;
     data: string;
+    payload: string;
     timestamp: number;
 }

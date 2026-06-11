@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 export const switchTab = async (direction: 'nextTab' | 'previousTab') => {
     const allTabs = await browser.tabs.query({ currentWindow: true });
     if (allTabs.length === 0) return;
@@ -34,7 +36,16 @@ export const switchTab = async (direction: 'nextTab' | 'previousTab') => {
 export const closeTab = async () => {
     const allTabs = await browser.tabs.query({ currentWindow: true });
     if (allTabs.length === 0) return;
-
+    if (allTabs.length === 1) {
+        toast("This is the last tab, please close the extension", {
+            description: "Sunday, December 03, 2023 at 9:00 AM",
+            action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+            },
+        });
+        return
+    };
     // 找到当前活动标签页
     const currentTab = allTabs.find(tab => tab.active);
     if (!currentTab) return;
