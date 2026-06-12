@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MqttConfigIndexRouteImport } from './routes/mqttConfig/index'
+import { Route as HomeIndexRouteImport } from './routes/home/index'
 import { Route as BilibiliIndexRouteImport } from './routes/bilibili/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const MqttConfigIndexRoute = MqttConfigIndexRouteImport.update({
   path: '/mqttConfig/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HomeIndexRoute = HomeIndexRouteImport.update({
+  id: '/home/',
+  path: '/home/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BilibiliIndexRoute = BilibiliIndexRouteImport.update({
   id: '/bilibili/',
   path: '/bilibili/',
@@ -32,30 +38,34 @@ const BilibiliIndexRoute = BilibiliIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bilibili/': typeof BilibiliIndexRoute
+  '/home/': typeof HomeIndexRoute
   '/mqttConfig/': typeof MqttConfigIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bilibili': typeof BilibiliIndexRoute
+  '/home': typeof HomeIndexRoute
   '/mqttConfig': typeof MqttConfigIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bilibili/': typeof BilibiliIndexRoute
+  '/home/': typeof HomeIndexRoute
   '/mqttConfig/': typeof MqttConfigIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bilibili/' | '/mqttConfig/'
+  fullPaths: '/' | '/bilibili/' | '/home/' | '/mqttConfig/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bilibili' | '/mqttConfig'
-  id: '__root__' | '/' | '/bilibili/' | '/mqttConfig/'
+  to: '/' | '/bilibili' | '/home' | '/mqttConfig'
+  id: '__root__' | '/' | '/bilibili/' | '/home/' | '/mqttConfig/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BilibiliIndexRoute: typeof BilibiliIndexRoute
+  HomeIndexRoute: typeof HomeIndexRoute
   MqttConfigIndexRoute: typeof MqttConfigIndexRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MqttConfigIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/home/': {
+      id: '/home/'
+      path: '/home'
+      fullPath: '/home/'
+      preLoaderRoute: typeof HomeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bilibili/': {
       id: '/bilibili/'
       path: '/bilibili'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BilibiliIndexRoute: BilibiliIndexRoute,
+  HomeIndexRoute: HomeIndexRoute,
   MqttConfigIndexRoute: MqttConfigIndexRoute,
 }
 export const routeTree = rootRouteImport

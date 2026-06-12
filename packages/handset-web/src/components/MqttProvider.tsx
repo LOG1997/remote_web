@@ -56,11 +56,13 @@ export function MqttProvider({ children }: { children: ReactNode }) {
         // 客户端配置
         const options = {
             clientId: 'react-app-' + Math.random().toString(16).slice(2, 10),
-            // username: configData.username,
-            // password: configData.password,
+            username: configData.username,
+            password: configData.password,
             clean: true,
             connectTimeout: 5000,
         };
+
+
 
         const mqttClient = mqtt.connect(url, options);
 
